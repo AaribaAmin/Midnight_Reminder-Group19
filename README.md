@@ -1,3 +1,5 @@
+# Midnight Reminder
+
 ## Midnight Reminder: Acceptance Criteria
 
 - Uses the local time zone of the machine running Pi. Late-night hours are 00:00 inclusive to 06:00 exclusive.

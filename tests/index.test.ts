@@ -7,7 +7,7 @@ import { createFakeClock, createFakeTimer, createFakePi } from "./helpers";
 describe("/bedtime-test command", () => {
 	it("registers a command named bedtime-test", () => {
 		const registerCommand = vi.fn();
-		const pi = { registerCommand } as unknown as ExtensionAPI;
+		const pi = { registerCommand, on: vi.fn() } as unknown as ExtensionAPI;
 		extensionFactory(pi);
 		expect(registerCommand).toHaveBeenCalledWith(
 			"bedtime-test",
@@ -17,7 +17,7 @@ describe("/bedtime-test command", () => {
 
 	it("calls ctx.ui.notify with the preview message when hasUI is true", async () => {
 		const registerCommand = vi.fn();
-		const pi = { registerCommand } as unknown as ExtensionAPI;
+		const pi = { registerCommand, on: vi.fn() } as unknown as ExtensionAPI;
 		extensionFactory(pi);
 
 		const notify = vi.fn();
@@ -29,7 +29,7 @@ describe("/bedtime-test command", () => {
 
 	it("is a no-op when hasUI is false", async () => {
 		const registerCommand = vi.fn();
-		const pi = { registerCommand } as unknown as ExtensionAPI;
+		const pi = { registerCommand, on: vi.fn() } as unknown as ExtensionAPI;
 		extensionFactory(pi);
 
 		const notify = vi.fn();

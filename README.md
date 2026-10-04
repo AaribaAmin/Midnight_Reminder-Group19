@@ -1,4 +1,5 @@
 # Midnight Reminder
+A Pi extension that serves as a gentle reminder to stop working past midnight.
 
 ## Midnight Reminder: Acceptance Criteria
 

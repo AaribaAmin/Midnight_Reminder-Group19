@@ -1,6 +1,13 @@
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+import { preview } from "./reminder";
 
 export default function (pi: ExtensionAPI) {
-	// Placeholder: /bedtime-test command and session_start/session_shutdown
-	// events will be registered here. No tool or model logic yet.
+	pi.registerCommand("bedtime-test", {
+		description: "Preview the midnight reminder message",
+		handler: async (_args, ctx) => {
+			if (ctx.hasUI) {
+				ctx.ui.notify(preview(), "info");
+			}
+		},
+	});
 }

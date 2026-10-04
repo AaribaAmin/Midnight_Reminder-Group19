@@ -13,3 +13,20 @@ A Pi extension that serves as a gentle reminder to stop working past midnight.
 - The timer stops when the extension session shuts down. Reloading does not accumulate timers or use an old session context.
 - No extra model calls, no blocking tools, no terminating Pi. In noninteractive mode, skip both notification and timer creation.
 - If the computer resumes after 06:00, the missed reminder is skipped.
+
+## Usage
+
+```bash
+npm install
+npm test                                # run all tests
+pi --extension ./src/index.ts           # run Pi with the extension
+TZ=UTC pi --extension ./src/index.ts    # demo: simulate late-night local time
+```
+
+Inside Pi, `/bedtime-test` previews the reminder.
+
+## Files
+- `src/time.ts`: pure time policy (`shouldRemind`, `localDateKey`)
+- `src/reminder.ts`: `Reminder` class: immediate check + 30s polling, once per local date
+- `src/index.ts`: Pi wiring: `/bedtime-test`, `session_start`, `session_shutdown`
+- `tests/`: unit and integration tests with a fake clock, timer, and notifier

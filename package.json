@@ -1,0 +1,36 @@
+{
+  "name": "midnight-reminder",
+  "version": "0.0.1",
+  "description": "A Pi extension that serves as a gentle reminder to stop working past midnight",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint src --ext .ts"
+  },
+  "keywords": [
+    "pi",
+    "extension",
+    "midnight-reminder"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@earendil-works/pi-coding-agent": "^0.87.1",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

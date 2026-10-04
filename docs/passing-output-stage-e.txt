@@ -1,0 +1,16 @@
+
+> midnight-reminder@0.0.1 test
+> vitest run
+
+
+ RUN  v2.1.9 /Users/erikaseverino/Developer/cs480/Midnight_Reminder-Group19
+
+ ✓ tests/time.test.ts (8 tests) 2ms
+ ✓ tests/reminder.test.ts (10 tests) 2ms
+ ✓ tests/index.test.ts (9 tests) 4ms
+
+ Test Files  3 passed (3)
+      Tests  27 passed (27)
+   Start at  22:55:45
+   Duration  255ms (transform 72ms, setup 0ms, collect 88ms, tests 8ms, environment 0ms, prepare 127ms)
+

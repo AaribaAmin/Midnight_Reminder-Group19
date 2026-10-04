@@ -1,0 +1,214 @@
+
+> midnight-reminder@0.0.1 test
+> vitest run
+
+
+ RUN  v2.1.9 /Users/erikaseverino/Developer/cs480/Midnight_Reminder-Group19
+
+ ✓ tests/time.test.ts (8 tests) 2ms
+ ❯ tests/reminder.test.ts (10 tests | 8 failed) 6ms
+   × Reminder automatic checks > start() at 02:00 notifies immediately without firing the timer 2ms
+     → expected "spy" to be called 1 times, but got 0 times
+   × Reminder automatic checks > start() at 23:00 then clock jumps to 02:00 next date and timer fires → one 0ms
+     → expected "spy" to be called 1 times, but got 0 times
+   × Reminder automatic checks > start() at 05:59 notifies once; 06:01 fire adds nothing 0ms
+     → expected "spy" to be called 1 times, but got 0 times
+   × Reminder automatic checks > start() at 02:00; fires at 02:00:30 and 02:01 stay at one 0ms
+     → expected "spy" to be called 1 times, but got 0 times
+   × Reminder automatic checks > start() at 02:00 Oct 4 → one; 00:00 Oct 5 fire → two 0ms
+     → expected "spy" to be called 1 times, but got 0 times
+   × Reminder automatic checks > start() called twice → only one active interval 1ms
+     → expected +0 to be 1 // Object.is equality
+   × Reminder automatic checks > start() then stop() clears intervals and firing does nothing 0ms
+     → expected +0 to be 1 // Object.is equality
+   × Reminder automatic checks > uses a 30000 ms interval 0ms
+     → expected undefined to be 30000 // Object.is equality
+ ❯ tests/index.test.ts (9 tests | 4 failed) 6ms
+   × session lifecycle > session_start in tui at 02:00 notifies once and starts one interval 2ms
+     → expected "spy" to be called 1 times, but got 0 times
+   × session lifecycle > after shutdown, only the new session ctx is notified 0ms
+     → expected "spy" to be called 1 times, but got 0 times
+   × session lifecycle > session_start twice without shutdown keeps one interval 1ms
+     → expected +0 to be 1 // Object.is equality
+   × session lifecycle > bedtime-test before the automatic check does not suppress the reminder 0ms
+     → expected "spy" to be called 2 times, but got 1 times
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 12 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/index.test.ts > session lifecycle > session_start in tui at 02:00 notifies once and starts one interval
+AssertionError: expected "spy" to be called 1 times, but got 0 times
+ ❯ tests/index.test.ts:54:18
+     52|   await fire("session_start", {}, ctx);
+     53| 
+     54|   expect(notify).toHaveBeenCalledTimes(1);
+       |                  ^
+     55|   expect(activeCount()).toBe(1);
+     56|  });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/12]⎯
+
+ FAIL  tests/index.test.ts > session lifecycle > after shutdown, only the new session ctx is notified
+AssertionError: expected "spy" to be called 1 times, but got 0 times
+ ❯ tests/index.test.ts:95:19
+     93|   const ctxA = { mode: "tui", hasUI: true, ui: { notify: notifyA } } a…
+     94|   await fire("session_start", {}, ctxA);
+     95|   expect(notifyA).toHaveBeenCalledTimes(1);
+       |                   ^
+     96|   await fire("session_shutdown", {}, ctxA);
+     97|   const callsAAtShutdown = notifyA.mock.calls.length;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/12]⎯
+
+ FAIL  tests/index.test.ts > session lifecycle > session_start twice without shutdown keeps one interval
+AssertionError: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ tests/index.test.ts:121:25
+    119|   await fire("session_start", {}, ctx);
+    120| 
+    121|   expect(activeCount()).toBe(1);
+       |                         ^
+    122|  });
+    123| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/12]⎯
+
+ FAIL  tests/index.test.ts > session lifecycle > bedtime-test before the automatic check does not suppress the reminder
+AssertionError: expected "spy" to be called 2 times, but got 1 times
+ ❯ tests/index.test.ts:139:18
+    137|   // Automatic session start at 01:00 still reminds: second notificati…
+    138|   await fire("session_start", {}, ctx);
+    139|   expect(notify).toHaveBeenCalledTimes(2);
+       |                  ^
+    140| 
+    141|   // Same date, later check produces no additional automatic notificat…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/12]⎯
+
+ FAIL  tests/reminder.test.ts > Reminder automatic checks > start() at 02:00 notifies immediately without firing the timer
+AssertionError: expected "spy" to be called 1 times, but got 0 times
+ ❯ tests/reminder.test.ts:22:18
+     20| 
+     21|   reminder.start();
+     22|   expect(notify).toHaveBeenCalledTimes(1);
+       |                  ^
+     23| 
+     24|   fire();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/12]⎯
+
+ FAIL  tests/reminder.test.ts > Reminder automatic checks > start() at 23:00 then clock jumps to 02:00 next date and timer fires → one
+AssertionError: expected "spy" to be called 1 times, but got 0 times
+ ❯ tests/reminder.test.ts:39:18
+     37|   set(new Date(2026, 9, 4, 2, 0));
+     38|   fire();
+     39|   expect(notify).toHaveBeenCalledTimes(1);
+       |                  ^
+     40|  });
+     41| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/12]⎯
+
+ FAIL  tests/reminder.test.ts > Reminder automatic checks > start() at 05:59 notifies once; 06:01 fire adds nothing
+AssertionError: expected "spy" to be called 1 times, but got 0 times
+ ❯ tests/reminder.test.ts:61:18
+     59| 
+     60|   reminder.start();
+     61|   expect(notify).toHaveBeenCalledTimes(1);
+       |                  ^
+     62| 
+     63|   set(new Date(2026, 9, 4, 6, 1));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/12]⎯
+
+ FAIL  tests/reminder.test.ts > Reminder automatic checks > start() at 02:00; fires at 02:00:30 and 02:01 stay at one
+AssertionError: expected "spy" to be called 1 times, but got 0 times
+ ❯ tests/reminder.test.ts:75:18
+     73| 
+     74|   reminder.start();
+     75|   expect(notify).toHaveBeenCalledTimes(1);
+       |                  ^
+     76| 
+     77|   set(new Date(2026, 9, 4, 2, 0, 30));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/12]⎯
+
+ FAIL  tests/reminder.test.ts > Reminder automatic checks > start() at 02:00 Oct 4 → one; 00:00 Oct 5 fire → two
+AssertionError: expected "spy" to be called 1 times, but got 0 times
+ ❯ tests/reminder.test.ts:93:18
+     91| 
+     92|   reminder.start();
+     93|   expect(notify).toHaveBeenCalledTimes(1);
+       |                  ^
+     94| 
+     95|   set(new Date(2026, 9, 5, 0, 0));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/12]⎯
+
+ FAIL  tests/reminder.test.ts > Reminder automatic checks > start() called twice → only one active interval
+AssertionError: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ tests/reminder.test.ts:107:25
+    105|   reminder.start();
+    106|   reminder.start();
+    107|   expect(activeCount()).toBe(1);
+       |                         ^
+    108|  });
+    109| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/12]⎯
+
+ FAIL  tests/reminder.test.ts > Reminder automatic checks > start() then stop() clears intervals and firing does nothing
+AssertionError: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ tests/reminder.test.ts:117:25
+    115| 
+    116|   reminder.start();
+    117|   expect(activeCount()).toBe(1);
+       |                         ^
+    118|   const afterStart = notify.mock.calls.length;
+    119| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/12]⎯
+
+ FAIL  tests/reminder.test.ts > Reminder automatic checks > uses a 30000 ms interval
+AssertionError: expected undefined to be 30000 // Object.is equality
+
+- Expected: 
+30000
+
++ Received: 
+undefined
+
+ ❯ tests/reminder.test.ts:133:24
+    131| 
+    132|   reminder.start();
+    133|   expect(intervalMs()).toBe(30000);
+       |                        ^
+    134|  });
+    135| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/12]⎯
+
+ Test Files  2 failed | 1 passed (3)
+      Tests  12 failed | 15 passed (27)
+   Start at  22:50:42
+   Duration  257ms (transform 54ms, setup 0ms, collect 70ms, tests 14ms, environment 0ms, prepare 123ms)
+

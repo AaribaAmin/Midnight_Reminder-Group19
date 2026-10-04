@@ -1,0 +1,97 @@
+
+> midnight-reminder@0.0.1 test
+> vitest run
+
+
+ RUN  v2.1.9 /Users/erikaseverino/Developer/cs480/Midnight_Reminder-Group19
+
+ ❯ tests/time.test.ts (8 tests | 4 failed) 5ms
+   × localDateKey > returns a date key from local components 3ms
+     → expected '2026-09-3' to be '2026-10-03' // Object.is equality
+   × shouldRemind > returns true at 00:00 with no prior reminder 0ms
+     → expected false to be true // Object.is equality
+   × shouldRemind > returns true at 05:59 when not reminded today 0ms
+     → expected false to be true // Object.is equality
+   × shouldRemind > returns true at 00:00 on next date after reminding yesterday 0ms
+     → expected false to be true // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/time.test.ts > localDateKey > returns a date key from local components
+AssertionError: expected '2026-09-3' to be '2026-10-03' // Object.is equality
+
+Expected: "2026-10-03"
+Received: "2026-09-3"
+
+ ❯ tests/time.test.ts:7:29
+      5|  it("returns a date key from local components", () => {
+      6|   const now = new Date(2026, 9, 3); // 2026-10-03
+      7|   expect(localDateKey(now)).toBe("2026-10-03");
+       |                             ^
+      8|  });
+      9| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  tests/time.test.ts > shouldRemind > returns true at 00:00 with no prior reminder
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/time.test.ts:19:35
+     17|  it("returns true at 00:00 with no prior reminder", () => {
+     18|   const now = new Date(2026, 9, 4, 0, 0);
+     19|   expect(shouldRemind(now, null)).toBe(true);
+       |                                   ^
+     20|  });
+     21| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  tests/time.test.ts > shouldRemind > returns true at 05:59 when not reminded today
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/time.test.ts:29:35
+     27|  it("returns true at 05:59 when not reminded today", () => {
+     28|   const now = new Date(2026, 9, 4, 5, 59);
+     29|   expect(shouldRemind(now, null)).toBe(true);
+       |                                   ^
+     30|  });
+     31| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  tests/time.test.ts > shouldRemind > returns true at 00:00 on next date after reminding yesterday
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/time.test.ts:44:43
+     42|  it("returns true at 00:00 on next date after reminding yesterday", ()…
+     43|   const now = new Date(2026, 9, 5, 0, 0);
+     44|   expect(shouldRemind(now, "2026-10-04")).toBe(true);
+       |                                           ^
+     45|  });
+     46| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+ Test Files  1 failed (1)
+      Tests  4 failed | 4 passed (8)
+   Start at  22:18:04
+   Duration  250ms (transform 18ms, setup 0ms, collect 12ms, tests 5ms, environment 0ms, prepare 42ms)
+
